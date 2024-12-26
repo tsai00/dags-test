@@ -4,6 +4,14 @@ from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.dummy import DummyOperator
 
+from airflow.providers.amazon.aws.hooks.s3 import S3Hook
+
+hook = S3Hook(aws_conn_id="HetznerObjectStorageS3")
+
+files = hook.list_keys(bucket_name="demo-airflow", prefix="airflow/logs/")
+print('AAAA')
+print(files)
+
 with DAG(
     dag_id="EXAMPLE_DAG",
     schedule="30 1 * * *",
