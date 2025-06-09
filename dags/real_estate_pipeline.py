@@ -7,6 +7,11 @@ from airflow.utils.task_group import TaskGroup
 
 from kubernetes.client import models as k8s
 
+# Prerequisites:
+#   1. Create Opaque secret "scraping-demo-secret" with required keys
+#   2. Create Docker registry secret to pull from private registry, e.g. using
+#      kubectl create secret docker-registry docker-registry-creds --docker-server=X --docker-username=X --docker-password=X --namespace airflow-1
+
 K8S_NAMESPACE = "airflow-1"
 
 ETL_IMAGE = "datainfrapilotacr.azurecr.io/scraping-demo:0.1"
@@ -16,7 +21,7 @@ SECRET_NAME = "scraping-demo-secret"
 kpo_shared_args = {
     "namespace": K8S_NAMESPACE,
     "image": ETL_IMAGE,
-    "image_pull_secrets": [k8s.V1LocalObjectReference("pull-creds")],
+    "image_pull_secrets": [k8s.V1LocalObjectReference("docker-registry-creds")],
     "get_logs": True,
     "do_xcom_push": False,
     "is_delete_operator_pod": True,
@@ -60,7 +65,7 @@ def prepare_project_listing_type_task_group(
                 "-m", "src.demo.orchestration.scrape",
                 "--project", project,
                 "--listing-type", listing_type,
-                "--batch-id", "{{ ds_nodash }}"
+                "--batch-id", "{{ tomorrow_ds_nodash }}"
             ],
             env_vars=common_env_vars,
             **kpo_shared_args,
@@ -74,7 +79,7 @@ def prepare_project_listing_type_task_group(
                 "-m", "src.demo.orchestration.transform",
                 "--project", project,
                 "--listing-type", listing_type,
-                "--batch-id", "{{ ds_nodash }}"
+                "--batch-id", "{{ tomorrow_ds_nodash }}"
             ],
             env_vars=common_env_vars,
             **kpo_shared_args,
@@ -88,7 +93,7 @@ def prepare_project_listing_type_task_group(
                 "-m", "src.demo.orchestration.upload_to_db",
                 "--project", project,
                 "--listing-type", listing_type,
-                "--batch-id", "{{ ds_nodash }}"
+                "--batch-id", "{{ tomorrow_ds_nodash }}"
             ],
             env_vars=common_env_vars,
             **kpo_shared_args,
