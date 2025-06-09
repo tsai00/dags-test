@@ -7,9 +7,11 @@ from airflow.utils.task_group import TaskGroup
 
 from kubernetes.client import models as k8s
 
-K8S_NAMESPACE = "default"
+K8S_NAMESPACE = "airflow-1"
 
 ETL_IMAGE = "datainfrapilotacr.azurecr.io/scraping-demo:0.1"
+
+SECRET_NAME = "scraping-demo-secret"
 
 kpo_shared_args = {
     "namespace": K8S_NAMESPACE,
@@ -23,25 +25,25 @@ kpo_shared_args = {
 
 common_env_vars = [
     k8s.V1EnvVar(name="AZURE_CLIENT_ID", value_from=k8s.V1EnvVarSource(
-        secret_key_ref=k8s.V1SecretKeySelector(name="my-etl-sp-secrets", key="azure_client_id"))),
+        secret_key_ref=k8s.V1SecretKeySelector(name=SECRET_NAME, key="azure_client_id"))),
     k8s.V1EnvVar(name="AZURE_TENANT_ID", value_from=k8s.V1EnvVarSource(
-        secret_key_ref=k8s.V1SecretKeySelector(name="my-etl-sp-secrets", key="azure_tenant_id"))),
+        secret_key_ref=k8s.V1SecretKeySelector(name=SECRET_NAME, key="azure_tenant_id"))),
     k8s.V1EnvVar(name="AZURE_CLIENT_SECRET", value_from=k8s.V1EnvVarSource(
-        secret_key_ref=k8s.V1SecretKeySelector(name="my-etl-sp-secrets", key="azure_client_secret"))),
+        secret_key_ref=k8s.V1SecretKeySelector(name=SECRET_NAME, key="azure_client_secret"))),
 
     k8s.V1EnvVar(name="ADLS_ACCOUNT_NAME", value="datainfrapilotdemosa"),
     k8s.V1EnvVar(name="ADLS_CONTAINER_NAME", value="data"),
 
     k8s.V1EnvVar(name="POSTGRES_DB_NAME", value="real_estate"),
     k8s.V1EnvVar(name="POSTGRES_USER", value_from=k8s.V1EnvVarSource(
-        secret_key_ref=k8s.V1SecretKeySelector(name="my-etl-secrets", key="postgres_user"))),
+        secret_key_ref=k8s.V1SecretKeySelector(name=SECRET_NAME, key="postgres_user"))),
     k8s.V1EnvVar(name="POSTGRES_PASSWORD", value_from=k8s.V1EnvVarSource(
-        secret_key_ref=k8s.V1SecretKeySelector(name="my-etl-secrets", key="postgres_password"))),
+        secret_key_ref=k8s.V1SecretKeySelector(name=SECRET_NAME, key="postgres_password"))),
     k8s.V1EnvVar(name="POSTGRES_HOST", value_from=k8s.V1EnvVarSource(
-        secret_key_ref=k8s.V1SecretKeySelector(name="my-etl-secrets", key="postgres_host"))),
+        secret_key_ref=k8s.V1SecretKeySelector(name=SECRET_NAME, key="postgres_host"))),
 
     k8s.V1EnvVar(name="SCRAPERAPI_KEY", value_from=k8s.V1EnvVarSource(
-        secret_key_ref=k8s.V1SecretKeySelector(name="my-etl-secrets", key="scraperapi_key"))),
+        secret_key_ref=k8s.V1SecretKeySelector(name=SECRET_NAME, key="scraperapi_key"))),
 ]
 
 
