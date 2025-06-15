@@ -131,9 +131,10 @@ with DAG(
     dag_id='real_estate_pipeline_demo',
     dag_display_name='Real Estate Scraping Pipeline',
     start_date=datetime.datetime(2025, 6, 7),
-    schedule='@daily',
+    schedule='0 10 * * *',
     catchup=False,
     tags=['real_estate', 'demo'],
+    max_active_runs=1,
     doc_md="""
     ### Real Estate ETL Pipeline
 
