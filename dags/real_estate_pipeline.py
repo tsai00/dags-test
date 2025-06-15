@@ -13,7 +13,7 @@ from kubernetes.client import models as k8s
 
 K8S_NAMESPACE = 'airflow-1'
 
-ETL_IMAGE = 'datainfrapilotacr.azurecr.io/scraping-demo:0.2'
+ETL_IMAGE = 'datainfrapilotacr.azurecr.io/scraping-demo:0.1'
 
 SECRET_NAME = 'scraping-demo-secret'
 
@@ -74,7 +74,7 @@ def prepare_project_listing_type_task_group(project: str, listing_type: str) -> 
             cmds=['python3'],
             arguments=[
                 '-m',
-                'src.demo.orchestration.scrape',
+                'src.orchestration.scrape',
                 '--project',
                 project,
                 '--listing-type',
@@ -92,7 +92,7 @@ def prepare_project_listing_type_task_group(project: str, listing_type: str) -> 
             cmds=['python3'],
             arguments=[
                 '-m',
-                'src.demo.orchestration.transform',
+                'src.orchestration.transform',
                 '--project',
                 project,
                 '--listing-type',
@@ -110,7 +110,7 @@ def prepare_project_listing_type_task_group(project: str, listing_type: str) -> 
             cmds=['python3'],
             arguments=[
                 '-m',
-                'src.demo.orchestration.upload_to_db',
+                'src.orchestration.upload_to_db',
                 '--project',
                 project,
                 '--listing-type',
