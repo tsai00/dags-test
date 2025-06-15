@@ -13,7 +13,7 @@ from kubernetes.client import models as k8s
 
 K8S_NAMESPACE = 'airflow-1'
 
-ETL_IMAGE = 'datainfrapilotacr.azurecr.io/scraping-demo:0.1'
+ETL_IMAGE = 'datainfrapilotacr.azurecr.io/scraping-demo:0.2'
 
 SECRET_NAME = 'scraping-demo-secret'
 
