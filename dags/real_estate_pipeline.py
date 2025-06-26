@@ -131,7 +131,7 @@ with DAG(
     dag_id='real_estate_pipeline_demo',
     dag_display_name='Real Estate Scraping Pipeline',
     start_date=datetime.datetime(2025, 6, 7),
-    schedule='0 10 * * *',
+    schedule='15 6 * * *',
     catchup=False,
     tags=['real_estate', 'demo'],
     max_active_runs=1,
