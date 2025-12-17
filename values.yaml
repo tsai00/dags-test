@@ -6,6 +6,9 @@ executor: "KubernetesExecutor"
 
 postgresql:
   enabled: true
+  image:
+    repository: postgres
+    tag: "15.15"
 
 pgbouncer:
   enabled: true
