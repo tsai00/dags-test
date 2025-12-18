@@ -45,6 +45,9 @@ migrateDatabaseJob:
   useHelmHooks: false
   applyCustomEnv: false
 
+webserver:
+  enabled: true
+  
 # ingress:
 #   apiServer:
 #     enabled: true
