@@ -51,10 +51,11 @@ webserver:
 config:
   api:
     base_url: http://airflow.datainfrapilot.com
+    
 ingress:
  apiServer:
    enabled: true
-   ingressClassName: traefik
+   ingressClassName: traefik-ingress
    pathType: Prefix
    hosts:
      - name: airflow.datainfrapilot.com
