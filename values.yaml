@@ -47,7 +47,10 @@ migrateDatabaseJob:
 
 webserver:
   enabled: false
-  
+
+config:
+  api:
+    base_url: http://airflow.datainfrapilot.com
 ingress:
  apiServer:
    enabled: true
