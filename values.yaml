@@ -48,12 +48,13 @@ migrateDatabaseJob:
 webserver:
   enabled: true
   
-# ingress:
-#   apiServer:
-#     enabled: true
-#     ingressClassName: traefik
-#     pathType: Prefix
-#     path: /airflow
-#     annotations:
-#       traefik.ingress.kubernetes.io/router.entrypoints: 'web'
-#       traefik.ingress.kubernetes.io/router.priority: '10'
+ingress:
+ apiServer:
+   enabled: true
+   ingressClassName: traefik
+   pathType: Prefix
+   hosts:
+     - airflow.datainfrapilot.com
+   annotations:
+     traefik.ingress.kubernetes.io/router.entrypoints: 'web'
+     traefik.ingress.kubernetes.io/router.priority: '10'
