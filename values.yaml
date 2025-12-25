@@ -66,6 +66,6 @@ ingress:
      traefik.ingress.kubernetes.io/router.priority: '10'
 
 
-extraEnv:
+extraEnv: |
   - name: AIRFLOW__CORE__LOAD_EXAMPLES
-    value: false
+    value: 'False'
