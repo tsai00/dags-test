@@ -64,3 +64,7 @@ ingress:
    annotations:
      traefik.ingress.kubernetes.io/router.entrypoints: 'web'
      traefik.ingress.kubernetes.io/router.priority: '10'
+
+
+extraEnv:
+  AIRFLOW__CORE__LOAD_EXAMPLES: false
