@@ -76,3 +76,5 @@ extraEnv: |
     value: 'False'
   - name: AIRFLOW__API__SECRET_KEY
     value: airflow-api-key
+  - name: AIRFLOW__API_AUTH__JWT_SECRET
+    value: airflow-jwt-key
