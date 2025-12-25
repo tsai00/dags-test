@@ -4,15 +4,20 @@ defaultAirflowTag: "3.1.4"
 
 executor: "KubernetesExecutor"
 
+# ---- DB CONFIG ---- #
 postgresql:
-  enabled: true
+  enabled: false
   image:
     repository: postgres
     tag: "15.15"
 
-pgbouncer:
-  enabled: true
+data:
+  metadataSecretName: airflow-db-creds
 
+pgbouncer:
+  enabled: false
+
+# ------------------- #
 dags:
   gitSync:
     enabled: true
@@ -32,6 +37,7 @@ scheduler:
     enabled: false
 
 workers:
+  safeToEvict: false
   logGroomerSidecar:
     enabled: false
 
@@ -46,21 +52,15 @@ migrateDatabaseJob:
   applyCustomEnv: false
 
 webserver:
-  enabled: false
+  enabled: true
 
-config:
-  api:
-    base_url: http://airflow.datainfrapilot.com
-    
 ingress:
  apiServer:
    enabled: true
-   ingressClassName: traefik-ingress
+   ingressClassName: traefik
    pathType: Prefix
    hosts:
-     - name: airflow.datainfrapilot.com
-       tls:
-         enabled: false
+     - airflow.datainfrapilot.com
    annotations:
      traefik.ingress.kubernetes.io/router.entrypoints: 'web'
      traefik.ingress.kubernetes.io/router.priority: '10'
