@@ -1,6 +1,6 @@
-airflowVersion: "3.1.4"
+airflowVersion: "3.1.5"
 
-defaultAirflowTag: "3.1.4"
+defaultAirflowTag: "3.1.5"
 
 executor: "KubernetesExecutor"
 
@@ -76,5 +76,5 @@ extraEnv: |
     value: 'False'
   - name: AIRFLOW__API__SECRET_KEY
     value: airflow-api-key
-  - name: AIRFLOW__API_AUTH__JWT_SECRET
-    value: airflow-jwt-key
+  # - name: AIRFLOW__API_AUTH__JWT_SECRET
+  #   value: airflow-jwt-key
