@@ -74,3 +74,5 @@ config:
 extraEnv: |
   - name: AIRFLOW__CORE__LOAD_EXAMPLES
     value: 'False'
+  - name: AIRFLOW__API__SECRET_KEY
+    value: airflow-api-key
