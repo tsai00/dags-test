@@ -1,7 +1,5 @@
 airflowVersion: "3.1.5"
-
 defaultAirflowTag: "3.1.5"
-
 executor: "KubernetesExecutor"
 
 # ---- DB CONFIG ---- #
@@ -16,8 +14,9 @@ data:
 
 pgbouncer:
   enabled: false
-
 # ------------------- #
+
+# ---- DAGS CONFIG ---- #
 dags:
   gitSync:
     enabled: true
@@ -27,14 +26,41 @@ dags:
     depth: 1
     maxFailures: 0
     subPath: "dags"
+# ------------------- #
+
+# ---- COMPONENTS' CONFIG ---- #
+apiServer:
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+    limits:
+      cpu: "1024m"
+      memory: "2Gi"
 
 triggerer:
   logGroomerSidecar:
     enabled: false
 
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+    limits:
+      cpu: "1024m"
+      memory: "2Gi"
+
 scheduler:
   logGroomerSidecar:
     enabled: false
+
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+    limits:
+      cpu: "1024m"
+      memory: "2Gi"
 
 workers:
   safeToEvict: false
@@ -52,9 +78,18 @@ workers:
 
   resources:
     requests:
-      cpu: "500m"
+      cpu: "200m"
+      memory: "512Mi"
+    limits:
+      cpu: "1000m"
       memory: "1Gi"
 
+webserver:
+  enabled: false
+# ----------------------- #
+
+
+# ---- JOBS' CONFIG ---- #
 createUserJob:
   useHelmHooks: false
   applyCustomEnv: false
@@ -66,10 +101,10 @@ migrateDatabaseJob:
     "argocd.argoproj.io/hook": Sync
   useHelmHooks: false
   applyCustomEnv: false
+# ----------------------- #
 
-webserver:
-  enabled: false
 
+# ---- INGRESS CONFIG ---- #
 ingress:
  apiServer:
    enabled: true
@@ -82,7 +117,10 @@ ingress:
    annotations:
      traefik.ingress.kubernetes.io/router.entrypoints: 'web'
      traefik.ingress.kubernetes.io/router.priority: '10'
+# ----------------------- #
 
+
+# ---- AIRFLOW CONFIG ---- #
 config:
   api:
     base_url: http://airflow.datainfrapilot.com
@@ -90,12 +128,15 @@ config:
     remote_logging: 'True'
     remote_base_log_folder: "s3://forloop-airflow-logs/logs"
     # The following connection must be created in Web UI
-    remote_log_conn_id: 'S3Conn'
+    remote_log_conn_id: 's3_do_conn'
 
 extraEnv: |
   - name: AIRFLOW__CORE__LOAD_EXAMPLES
     value: 'False'
+  - name: AIRFLOW_CONN_S3_DO_CONN
+    value: {"conn_type": "aws", "login": "<ACCESS_KEY>", "password": "<SECRET_ACCESS_KEY>", "extra": {"endpoint_url": "https://forloop-airflow-logs.fra1.digitaloceanspaces.com"}}
   # - name: AIRFLOW__API__SECRET_KEY
   #   value: airflow-api-key
   # - name: AIRFLOW__API_AUTH__JWT_SECRET
   #   value: airflow-jwt-key
+# ----------------------- #
