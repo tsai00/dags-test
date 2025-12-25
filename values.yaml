@@ -72,6 +72,11 @@ ingress:
 config:
   api:
     base_url: http://airflow.datainfrapilot.com
+  logging:
+    remote_logging: 'True'
+    remote_base_log_folder: "s3://forloop-airflow-logs/logs"
+    # The following connection must be created in Web UI
+    remote_log_conn_id: 'S3Conn'
 
 extraEnv: |
   - name: AIRFLOW__CORE__LOAD_EXAMPLES
