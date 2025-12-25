@@ -41,6 +41,20 @@ workers:
   logGroomerSidecar:
     enabled: false
 
+  nodeSelector:
+    doks.digitalocean.com/node-pool: workload-pool
+
+  tolerations:
+    - key: "app"
+      operator: "Equal"
+      value: "workload"
+      effect: "NoSchedule"
+
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+
 createUserJob:
   useHelmHooks: false
   applyCustomEnv: false
