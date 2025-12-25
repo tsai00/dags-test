@@ -44,6 +44,8 @@ workers:
 createUserJob:
   useHelmHooks: false
   applyCustomEnv: false
+  jobAnnotations:
+      "argocd.argoproj.io/hook": Sync
 
 migrateDatabaseJob:
   jobAnnotations:
@@ -74,7 +76,7 @@ config:
 extraEnv: |
   - name: AIRFLOW__CORE__LOAD_EXAMPLES
     value: 'False'
-  - name: AIRFLOW__API__SECRET_KEY
-    value: airflow-api-key
+  # - name: AIRFLOW__API__SECRET_KEY
+  #   value: airflow-api-key
   # - name: AIRFLOW__API_AUTH__JWT_SECRET
   #   value: airflow-jwt-key
