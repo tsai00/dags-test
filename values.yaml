@@ -38,6 +38,8 @@ apiServer:
       cpu: "1024m"
       memory: "2Gi"
 
+  apiServerConfigConfigMapName: 'airflow-api-server-config'
+
 triggerer:
   logGroomerSidecar:
     enabled: false
