@@ -133,10 +133,9 @@ config:
 extraEnv: |
   - name: AIRFLOW__CORE__LOAD_EXAMPLES
     value: 'False'
-  - name: AIRFLOW_CONN_S3_DO_CONN
-    value: '{"conn_type": "aws", "login": "<ACCESS_KEY>", "password": "<SECRET_ACCESS_KEY>", "extra": {"endpoint_url": "https://forloop-airflow-logs.fra1.digitaloceanspaces.com"}}'
-  # - name: AIRFLOW__API__SECRET_KEY
-  #   value: airflow-api-key
-  # - name: AIRFLOW__API_AUTH__JWT_SECRET
-  #   value: airflow-jwt-key
+
+secret:
+  - envName: "AIRFLOW_CONN_S3_DO_CONN"
+    secretName: "airflow-connections"
+    secretKey: "AIRFLOW_CONN_S3_DO_CONN"
 # ----------------------- #
