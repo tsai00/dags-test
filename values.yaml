@@ -20,12 +20,13 @@ pgbouncer:
 dags:
   gitSync:
     enabled: true
-    repo: https://github.com/tsai00/dags-test.git
+    repo: git@github.com:ForloopAI/forloop_airflow.git
     branch: main
     rev: HEAD
     depth: 1
     maxFailures: 0
     subPath: "dags"
+    sshKeySecret: "airflow-git-ssh-key-secret"
 # ------------------- #
 
 # ---- COMPONENTS' CONFIG ---- #
