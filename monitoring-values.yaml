@@ -2,11 +2,8 @@ grafana:
  ingress:
    enabled: true
    ingressClassName: traefik-ingress
-   pathType: Prefix
    hosts:
-     - name: grafana.datainfrapilot.com
-       tls:
-         enabled: false
+    - grafana.datainfrapilot.com
    annotations:
      traefik.ingress.kubernetes.io/router.entrypoints: 'web'
      traefik.ingress.kubernetes.io/router.priority: '10'
